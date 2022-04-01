@@ -67,7 +67,7 @@ include "../connect/sessionCheck.php";
                                 </div>
                                 <div>
                                     <label for="blogFile">파일</label>
-                                    <input type="file" name="blogFile" id="blogFile" placeholder="사진을 넣어주세요! 사진은 jpg, gif, png 파일만 지원이 됩니다.">
+                                    <input type="file" accept=".jpg, .jpeg, .png, .gif" name="blogFile" id="blogFile" placeholder="사진을 넣어주세요! 사진은 jpg, gif, png 파일만 지원이 됩니다.">
                                 </div>
                                 <button type="submit" value="저장하기">저장하기</button>
                             </fieldset>

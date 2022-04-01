@@ -15,7 +15,7 @@
 
     <!-- style -->
     <?php
-        include "../../include/style.php";
+        include "../include/style.php";
      ?>
     <!-- //style -->
     <style>
@@ -43,12 +43,12 @@
    
     <!-- header -->
     <?php
-        include "../../include/header.php";
+        include "../include/header.php";
     ?>
     <!-- //header -->
         <main id="contents">
                 <h2 class="ir_so">컨텐츠 영역</h2>
-                <section class="join-type gray">
+                <section class="join-type">
                     <div class="member-form">
                     <div class="logo"><img src="../assets/img/Logo.png" alt="로고"></div>
                         <h3>회원가입</h3>
@@ -99,9 +99,7 @@
             </div>
         </section>
     </main>
-<?php
-    include "../../include/footer.php";
-?>
+
 <!-- // footer -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>

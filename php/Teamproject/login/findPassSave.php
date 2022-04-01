@@ -26,13 +26,13 @@
     <link href="https://webfontworld.github.io/BMJua/BMJua.css" rel="stylesheet">
     <!-- style -->
     <?php
-        include "../../include/style.php";
+        include "../include/style.php";
     ?>
 </head>
 <body>
     <!-- header -->
     <?php
-        include "../../include/header.php";
+        include "../include/header.php";
     ?>
     <!-- contents -->
     <main id="contents">

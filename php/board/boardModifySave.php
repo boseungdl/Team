@@ -26,7 +26,7 @@ include "../connect/sessionCheck.php";
         $boardContents = $connect -> real_escape_string($boardContents);
         
         //쿼리문 작성
-        $sql = "SELECT youPass, memberID FROM myMember WHERE memberID = {$memberID}";
+        $sql = "SELECT youPass, memberID FROM myMember JOIN myBoard WHERE memberID = {$memberID}";
         $result = $connect -> query($sql);
 
         // var_dump($result);

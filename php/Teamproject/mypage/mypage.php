@@ -23,6 +23,7 @@
             text-align: center;
             border-right: 1px solid #ddd;
             padding-right: 30px;
+            position: relative;
         }
         .mypage__img {
             width: 180px;
@@ -30,18 +31,42 @@
             border-radius: 50%;
             margin-bottom: 10px;
         }
-        .mypage__changeImg a {
+        #imgView {
+            position: absolute;
+            left: 39%; top: 33%;
+            opacity: 0;
+            z-index: -9999;
+        }
+        .mypage__changeImg {
+            font-family: 'BMJua';
             color: #fff;
-            padding: 6px 15px;
+            padding: 5px 15px;
             display: inline-block;
-            border: 1px solid #fff;
             border-radius: 10px;
             margin-bottom: 50px;
             font-size: 12px;
             background: #000;
             transition: all 0.3s;
+            border: 1px solid #fff;
         }
-        .mypage__changeImg a:hover {
+        .mypage__changeImg2 {
+            font-family: 'BMJua';
+            color: #fff;
+            padding: 5px 15px;
+            display: inline-block;
+            border-radius: 10px;
+            margin-bottom: 50px;
+            font-size: 12px;
+            background: #000;
+            transition: all 0.3s;
+            border: 1px solid #fff;
+        }
+        .mypage__changeImg:hover {
+            background: #fff;
+            color: #000;
+            border: 1px solid #000;
+        }
+        .mypage__changeImg2:hover {
             background: #fff;
             color: #000;
             border: 1px solid #000;
@@ -78,14 +103,14 @@
             text-align: right;
         }
         .mypage__modifyBtn a {
-            padding: 10px 20px;
+            padding: 6px 15px;
             font-size: 18px;
             display: inline-block;
-            border: 1px solid #fff;
             color: #fff;
             border-radius: 10px;
             background: #000;
             transition: all 0.3s;
+            border: 1px solid #fff;
         }
         .mypage__modifyBtn a:hover {
             background: #fff;
@@ -130,7 +155,7 @@
         }
     </style>
     <?php
-        include "../../include/style.php"
+        include "../include/style.php"
     ?>
     <!-- //style -->
 </head>
@@ -140,7 +165,7 @@
     ?>
     <!-- // skip -->
     <?php
-        include "../../include/header.php";
+        include "../include/header.php";
     ?>
     <!-- // header -->
 <main id="contents">
@@ -148,12 +173,24 @@
         <section class="mypage-type">
             <div class="mypage__inner">
                 <article class="mypage__profile">
+<?php
+    $memberID = $_SESSION['memberID'];
+    // 쿼리문 작성 -> 해당 ID값의 제목, 내용 출력
+    $sql = "SELECT youEmail, youName, youNickName, youPhone, youPass, youPhoto, youIntro FROM myTeam WHERE memberID = {$memberID}";
+    $result = $connect -> query($sql);
+    if($result){
+        $memberInfo = $result -> fetch_array(MYSQLI_ASSOC);
+?>
+                <form action="imgModify.php" id="imgForm" method="post" enctype="multipart/form-data">
                     <figure>
-                        <img src="../assets/img/Sun.jpg" alt="프로필이미지" class="mypage__img">
+                        <img src="../assets/img/<?=$memberInfo['youPhoto']?>" alt="프로필이미지" class="mypage__img" id="View">
                     </figure>
-                    <div class="mypage__changeImg"><a href="#">이미지 변경</a></div>
-                    <div class="mypage__nickName">젠틀맨 김창식</div>
-                    <div class="mypage__name">김정식</div>
+                        <input type="file" name="imgView" id="imgView" accept="image/*">
+                        <label for="imgView" class="mypage__changeImg">이미지 변경</label>
+                        <button type="submit" class="mypage__changeImg2">저장</button>
+                </form>
+                    <div class="mypage__nickName"><?=$memberInfo['youNickName']?></div>
+                    <div class="mypage__name"><?=$memberInfo['youName']?></div>
                     <div class="mypage__play">
                         <span>댓글<em>100</em></span>
                         <span>게시물<em>30</em></span>
@@ -162,43 +199,65 @@
                 </article>
                 <article class="mypage__info">
                 <h1>회원 정보</h1>
-                    <form action="#" class="info__modify">
+                    <form action="mypageModify.php" name="mypage" method="post" class="info__modify" onsubmit ="return passCheck()">
                         <fieldset>
                             <legend class="ir_so">검색영역</legend>
                             <div class="mypage__modifyBtn">
-                                <button><a href="#">수정하기</a></button>
+                                <button type="submit"><a>수정하기</a></button>
                             </div>
                             <div class="nameWrap">
                                 <div class="nameBox">
                                     <label for="info__name">이름</label>
-                                    <input type="text" name="info__name" class="info__name">
+                                    <input type="text" name="info__name" id="info__name" class="info__name" value="<?=$memberInfo['youName']?>">
                                 </div>
                                 <div class="nickNameBox">
                                     <label for="info__nickName">닉네임</label>
-                                    <input type="text" name="info__nickName" class="info__nickName">
+                                    <input type="text" name="info__nickName" id="info__nickName" class="info__nickName" value="<?=$memberInfo['youNickName']?>">
                                 </div>
                             </div>
-                            <div class="info__email">
-                                <label for="info__email">이메일</label>
-                                <input type="text" name="info__email" class="info__email">
+                            <div class="info__phone">
+                                <label for="info__phone">휴대폰 번호</label>
+                                <input type="text" name="info__phone" id="info__phone" class="info__phone" value="<?=$memberInfo['youPhone']?>">
                             </div>
                             <div class="info__password">
-                                <label for="info__password">비밀번호</label>
-                                <input type="text" name="info__password" class="info__password">
+                                <label for="info__password">비밀번호</label><span class="comment" id="youPassComment"></span>
+                                <input type="password" name="info__password" id="info__password" class="info__password">
                             </div>
                             <div class="info__introduce">
                                 <label for="info__introduce">자기소개</label>
-                                <textarea name="info__introduce" id="info__introduce" class="info__introduce">자기소개쓰는란</textarea>
+                                <textarea name="info__introduce" id="info__introduce" class="info__introduce"><?=$memberInfo['youIntro']?></textarea>
                             </div>
                         </fieldset>
                     </form>
                 </article>
+<?php }?>
             </div>
         </section>
     </main>
-<?php
-    include "../../include/footer.php";
-?>
 <!-- // footer -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $(function() {
+        $("#imgView").on('change', function(){
+            readURL(this);
+        });
+    });
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+                $('#View').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+   var password = '<?=$memberInfo['youPass']?>';
+   function passCheck(){
+        if($("#info__password").val() !== password){
+            $("#youPassComment").text("비밀번호가 동일하지 않습니다!");
+            return false;
+        }
+    }
+</script>
 </body>
 </html>

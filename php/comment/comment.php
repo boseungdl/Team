@@ -112,10 +112,10 @@
         <h2 class="ir_so">컨텐츠 영역</h2>
         <section id="card-type" class="section center">
             <div class="container">
-                <h3 class="section__title">웹스토리보이 강의</h3>
+                <h3 class="section__title">코딩 강의</h3>
                 <p class="section__desc">
-                    웹디자이너, 웹 퍼블리셔, 프론트앤드 개발자를 위한 강의 사이트입니다. <br>
-                    Gmarket Sans Light 22px 150% #67778A 
+                   다양한 언어를 배우며 기초부터 실력을 쌓아가는 강의 사이트입니다. <br>
+                   
                 </p>
                 <div class="card__inner">
                     <article class="card">
@@ -124,7 +124,7 @@
                         </figure>
                         <div class="card__body">
                             <h3 class="card__title">웹표준 사이트 만들기</h3>
-                            <p class="card__desc">사이트를 만들기 위한 기초 강의입니다. 기본 코딩에 대한 감각을 익히고, 웹 표준을 준수하면서 코딩하는 방법을 익힙니다. 다양한 예제를 통해 사이트를 만드는 기본 강의입니다.</p>
+                            <p class="card__desc">웹 표준은 월드 와이드 웹의 측면을 서술하고 정의하는 공식 표준이나 다른 기술 규격을 가리키는 일반적인 용어이다. 최근에 이 용어는 웹 사이트를 작성하는 데 중요도가 높아지고 있으며 웹 디자인, 개발과 관계가 있다.</p>
                             <a class="card__btn" href="#">
                                 더 자세히 보기
                                 <svg width="52" height="8" viewBox="0 0 52 8" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -139,7 +139,7 @@
                         </figure>
                         <div class="card__body">
                             <h3 class="card__title">반응형 사이트 만들기</h3>
-                            <p class="card__desc">사이트를 만들기 위한 기초 강의입니다. 기본 코딩에 대한 감각을 익히고, 웹 표준을 준수하면서 코딩하는 방법을 익힙니다. 다양한 예제를 통해 사이트를 만드는 기본 강의입니다.</p>
+                            <p class="card__desc">반응형 웹 디자인은 다양한 디바이스, 창, 화면 크기에서 원활하게 렌더링되는 웹 페이지를 제작하는 을 말합니다. 웹 사이트를 반응형으로 설계하면, 어떤 디바이스에서 어떤 방식으로 접속하든지 웹 사이트의 일관성을 유지할 수 있습니다. </p>
                             <a class="card__btn" href="#">
                                 더 자세히 보기
                                 <svg width="52" height="8" viewBox="0 0 52 8" fill="none" xmlns="http://www.w3.org/2000/svg">

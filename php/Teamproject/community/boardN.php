@@ -1,37 +1,29 @@
 <?php
    include "../../connect/connect.php";
-
+   include "../../connect/session.php";
 ?>
-
-
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../assets/css/reset.css">
     <link href="https://webfontworld.github.io/BMJua/BMJua.css" rel="stylesheet">
+    <?php
+        include "../include/style.php";
+    ?>
     <style>
-        body {
-            font-family: 'BMJua';
-            background-color: #fafafa;
-        }
         .wrap {
+            font-family: 'BMJua';
             max-width: 1200px;
             margin: 0 auto;
         }
-        #header {
+        .header {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 150px;
-        }
-        #header h2 {
-            font-size: 24px;
-            font-weight: 800;
+            justify-content: end;
+            align-items: end;
+            height: 50px;
         }
         fieldset {
             display: flex;
@@ -55,37 +47,13 @@
             width: 120px;
             height: 35px;
             border-radius: 10px;
-            background-color: #605bff;
+            background-color: #605BFF;
             color: #fff;
             cursor: pointer;
         }
         /* 여기까지헤더 include 리셋포함*/
-
-        /* 페이지네이션 */
-        .board__pages {
-            margin-top: 40px;
-        }
-        .board__pages ul {
-            display: flex;
-            justify-content: center;
-        }
-        .board__pages ul li {}
-        .board__pages ul li a {
-            display: block;
-            border: 1px solid #eee;
-            padding: 14px 10px;
-            font-size: 14px;
-            margin-left: -1px;
-        }
-        .board__pages ul li.active a {
-            background: #000;
-            color: #fff;
-        }
-
-
-
         #nav {
-            
+            margin-top: 100px;
         }
         #nav ul {
             display: flex;
@@ -95,20 +63,20 @@
             border-radius: 10px;
         }
         #nav li.active a {
-            background: #605bff;
+            background: #605BFF;
             color: #fff;
+            border-radius: 10px;
         }
         #nav a {
             display: inline-block;
             padding: 15px 20px;
             cursor: pointer;
         }
-
         #main {
             display: grid;
             margin-top: 50px;
-            grid-template-columns: repeat(4, minmax(100px, 300px));
-            grid-template-rows: repeat(4, 250px);
+            grid-template-columns: repeat(3, minmax(100px, 500px));
+            grid-template-rows: repeat(1, 250px);
             grid-gap: 2em;
         }
         .room {
@@ -123,18 +91,18 @@
         }
         .room > span {
             padding: 5px 15px;
-            background-color: #ff6a77;
+            background-color: #FF6A77;
             border-radius: 22.5px;
             color: #fff;
         }
         .room form {
             display: inline-block;
         }
-        .room button {
+        .meet {
             font-size: 16px;
             padding: 5px 15px;
             border-radius: 22.5px;
-            background-color: #ffd66b;
+            background-color: #FFD66B;
             font-family: 'BMJua';
         }
         .room p {
@@ -149,7 +117,6 @@
         .room .roomInfo {
             display: flex;
             align-items: center;
-            
         }
         .room .roomInfo a {
             flex-basis: 60%;
@@ -157,18 +124,50 @@
         .room .roomInfo > span {
             margin-left: 3px;
         }
-        .room span span {
-            margin-left: 5px;
-            font-size: 14px;
+        .room .likeCount {
+           
+            margin-left: 10px;
             font-weight: 700;
+            
         }
+        .write {
+            float: right;
+            padding: 10px 20px;
+            background: #000;
+            color: #fff;
+            margin-top: 5px;
+            border-radius: 10px;
+        }
+        .btn-like .heart-shape {
+            display: inline;
+            color: red;
+        }
+        .btn-like {
+            border: none;
+            background-color: inherit;
+        }
+
+        /* .likeCount {
+            margin-left: 5px;
+            font-size: 18px;
+            display:inline-block;
+        } */
     </style>
 </head>
 <body>
+    <?php
+        include "../include/header.php";
+    ?>
     <div class="wrap">
-        <header id="header">
-            <h2>방역투게더</h2>
-            <form action="boardQSearch.php" name="boardSearch" method="get">
+        <nav id="nav">
+            <ul>
+                <li><a href="boardQ.php">Q&A</a></li>
+                <li class="active"><a href="boardN.php">놀이터</a></li>
+                <li><a href="boardT.php">토론장</a></li>
+            </ul>
+        </nav>
+        <div class="header">
+            <form action="boardNSearch.php" name="boardSearch" method="get">
                 <fieldset>
                     <legend class="ir_so">게시판 검색 영역</legend>
                     <div>
@@ -186,97 +185,126 @@
                     </div>
                 </fieldset>
             </form>
-        </header>
+        </div>
 <!-- //header include -->
-
-        <nav id="nav">
-            <ul>
-                <li><a href="#">Q&A</a></li>
-                <li class="active"><a href="#">놀이터</a></li>
-                <li><a href="#">토론장</a></li>
-            </ul>
-        </nav>
-        <main id="main">
-        <?php
+    <main id="main">
+    <?php
+    $memberID = $_SESSION['memberID'];
     //b.boardID, b.boardTitle, m.youName, b.regTime, b.boardView
     if(isset($_GET['page'])){
         $page = (int) $_GET['page'];
     } else {
         $page =1;
     }
-
     //게시판 불러올 갯수
     $pageView = 9;
     $pageLimit = ($pageView * $page) - $pageView;
-    
-    $sql = "SELECT b.boardID, b.boardTitle, m.youName, b.regTime, b.boardView FROM myBoard b JOIN myMember m ON(m.memberID = b.memberID) ORDER BY boardID DESC LIMIT {$pageLimit}, {$pageView}";
+    $sql = "SELECT b.boardID, b.boardTitle, b.boardMeet, b.boardContents, m.youNickName, b.regTime, b.boardLike FROM teamBoardN b JOIN myTeam m ON(m.memberID = b.memberID) ORDER BY boardID DESC LIMIT {$pageLimit}, {$pageView}";
     $result = $connect -> query($sql);
+    $SIBAL = "";
     if($result){
         $count = $result -> num_rows;
         if($count > 0){
             for($i=1; $i<=$count; $i++){
                 $boardInfo = $result -> fetch_array(MYSQLI_ASSOC);?>
-                <article class="room">
-                <h3>제목</h3>
-                <span>인원수</span>
-                <form action="#">
-                    <label for="#" class="ir_so"></label>
-                    <button type="submit" >입장</button>
-                </form>
-                <p># Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo asperiores officia repellendus laudantium alias qui eveniet? Voluptates veniam cupiditate quaerat ea perspiciatis dolores rerum earum, minus cum et adipisci beatae.</p>
-                <figure class="roomInfo">
-                    <a href="" class="people"><img src="../assets/img/People.jpg" alt=""></a>
-                   <span><img src="../assets/img/Chat.jpg" alt=""><span>23</span></span>
-                   <span><img src="../assets/img/Heart.jpg" alt=""><span>232</span> </span>
-                </figure>
-            </article>
+        <article class="room">
+            <h3><?=$boardInfo['boardTitle']?></h3>
+            <span><?=$boardInfo['youNickName']?></span>
+            <a class="meet" href="<?=$boardInfo['boardMeet']?>">입장</a>
+            <p><?=$boardInfo['boardContents']?></p>
+            <figure class="roomInfo">
+                <a href="" class="people"><img src="../assets/img/People.jpg" alt=""></a>
+                <span><img src="../assets/img/Chat.jpg" alt=""><span></span></span>
+                <button type="button" class="btn-like" data-name="<?=$boardInfo['boardID']?>">
+                <?php   if($memberID){
+                    $sqlH = "SELECT * FROM heart WHERE memberID = $memberID";
+                    $resultH = $connect -> query($sqlH);
+                    foreach($resultH as $heartInfo){
+                        if($heartInfo['boardID'] == $boardInfo['boardID']){
+                            $SIBAL = 'true';
+                            break;
+                        } else {
+                            $SIBAL = 'false';
+                        }
+                    } ?>
+            <?php   if($SIBAL == 'true'){?>
+                <span class="heart_shape"><img src="../assets/img/Like2.jpg" alt=""></span><span class="likeCount"><?=$boardInfo['boardLike']?></span></span>
+            <?php   } else { ?>
+                <span class="heart_shape"><img src="../assets/img/Like.jpg" alt=""></span><span class="likeCount"><?=$boardInfo['boardLike']?></span></span>
+            <?php   }
+                } else {  ?>
+                    <span class="heart_shape"><img src="../assets/img/Like.jpg" alt=""></span><span class="likeCount"><?=$boardInfo['boardLike']?></span></span>
+            <?php   } ?>
+                </button>
+            </figure>
+        </article>
         <?php }
         }
     }
 ?>
-<!-- 게시판에서 좋아요 클릭하면 올라가고 다른건 조회수?
-뷰를 만든다음 거기서 (댓글) 밑주소있고 
-사용자가 입장 누르면 뷰가 나오고 뷰에서 사용자의
-아이디값(세션)가져와서 보드방문자명단 만들고 로그아웃시 세션파괴
-뷰페이지 나오면 쿠키값을 나오면 쿠키값삭제?
 
-입장(a태그)을 누른 사람들에 한에서 
-입장을 누르면 온클릭으로 ajax를 사용해 인원수가 늘어나고 같은 페이지에서
-쿠기부여해(입장누르면 에이젝스로 옮겨진 페이지에서 부여)
-2시간 방문자 명단(닉네임값을 세션?쿠키?으로 받아와 명단작성)
-명단 확인 페이지에서 에이젝스로 체크페이지에서 쿠키(세션)명단을 가져온다.
-인원수 는 ajax로 데이타 값을 받아와서 밸류값에 변수를 넣는다.
-
-좋아요이미지 바꾸고(이건 스크립으로 체크했을떄 바뀌게끔 토글),
-좋아요를 누르면 ajax로 체크페이지에서 세션값이 존재한다면 좋아요수 1증가
-이미지가 검정 이미지라면 데이터 넘어가지 않고 1마이너스 -->
-
-            
-            
-            
-         
-        </main>
+</main>
         <div>
             <a href="boardWrite.php" class="write">글쓰기</a>
         </div>
         <div class="board__pages">
             <ul>
 <?php
+    $sql = "SELECT * FROM teamBoardN";
+    $result = $connect -> query($sql);
+    $count = $result -> num_rows;
+    $GET1 = '';
+    $GET2 = '';
+    $searchOption = '';
+    $address = 'boardN';
+    $boardPage = 'boardNPage';
     require "boardPage.php";
 ?>
             </ul>
         </div>
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
     </div>
-   
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+var memberID = "<?=$_SESSION['memberID']?>"
+if(!memberID){
+    alert("로그인 후 이용해주세요!");
+} else {
+    $(".btn-like").on("click", function(e) {
+        var button = $(e.currentTarget || e.target)
+        var likeCount = button.find(".likeCount")
+        var heartShape = button.find(".heart_shape")
+        // console.log(heartShape);
+        $.ajax({
+            type : "POST",
+            url : "likeCheck.php",
+            data : {"articleId": button.data('name'), "memberID": memberID},
+            dataType : "json",
+            success : function(data){
+                var addCount = (data.data == "like" ? 1 : data.data == "unlike" ? -1 : 0)
+                likeCount.text(+likeCount.text() + addCount)
+                heartShape.html(data.data == "like" ? "<img src='../assets/img/Like2.jpg'>" : data.data == "unlike" ? "<img src='../assets/img/Like.jpg'>" : "<img src='../assets/img/Like.jpg'>")
+            },
+            error : function(request, status, error){
+                        console.log("request" + request);
+                        console.log("status" + status);
+                        console.log("error" + error);
+            }
+        })
+    })
+    // $(".btn-like").each(function(idx, el) {
+    //     var button = $(el)
+    //     var heartShape = button.find(".heart_shape")
+    //     $.get("likeCheck.php", {
+    //         getLikedByCode: button.data('name')
+    //     }, function(res) {
+    //         if (res == "unliked") {
+    //                 heartShape.find("i").removeClass("fas").addClass("far")
+    //             } else if (res == "liked") {
+    //                 heartShape.find("i").removeClass("far").addClass("fas")
+    //             }
+    //     })
+    // })
+}
+</script>
 </body>
 </html>

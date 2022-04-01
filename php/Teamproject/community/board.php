@@ -16,8 +16,8 @@
         include "../../include/style.php";
     ?>
     <style>
-        body {
-            background-color: #FAFAFB;
+       body {
+            background-color: #F8F8FF;
         }
         #contents {
             font-family: 'BMJua';
@@ -29,28 +29,36 @@
             margin-bottom: 3vh;
         }
         .container__box {
+            height: 670px;
             display: flex;
             justify-content: center;
+            align-items: center;
             margin-bottom: 10vh;
         }
         .container__box > div {
             width: 22%;
             margin-right: 3vw;
             background: #fff;
-            border-radius: 20px;
+            border-radius: 40px;
             text-align: center;
-            line-height: 90vh;
+            line-height: 20.5vw;
+        }
+        .container__box > div.Qcontanier {
+            border: 1px solid #ffa3862e;
+        }
+        .container__box > div.Ncontanier {
+            border: 1px solid #7d79ff36;
         }
         .container__box > div.Tcontanier {
+            border: 1px solid #51ab6557;
             margin-right: 0;
         }
         .container__box > div > a {
-            padding: 3vh 5vw;
+            padding: 6.4vw 4vw;
             font-size: 3vw;
             letter-spacing: 1vw;
             color: #fff;
             border-radius: 20px;
-            transition: all 0.6s;
         }
         .container__box > div.Qcontanier > a {
             background: #FF8F6Bd1;
@@ -74,7 +82,7 @@
 </head>
 <body>
     <?php
-        include "../../include/header.php";
+        include "../include/header.php";
     ?>
     <!-- contents -->
     <main id="contents">
@@ -91,8 +99,6 @@
             </div>
         </div>
     </main>
-    <?php
-        include "../../include/footer.php";
-    ?>
+   
 </body>
 </html>

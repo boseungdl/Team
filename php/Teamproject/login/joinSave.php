@@ -40,7 +40,7 @@
     }
     // 회원가입
      if($isEmailCheck = true && $isPhoneCheck = true  && $agree == true){
-         $sql = "INSERT INTO myTeam(youName, youEmail, youNickname, youPhone, youPass, regTime)VALUES('$youName', '$youEmail', '$youNickname','$youPhone', '$youPass', '$regTime')";
+         $sql = "INSERT INTO myTeam(youName, youEmail, youNickname, youPhone, youPass, regTime)VALUES('$youName', '$youEmail', '$youNickName','$youPhone', '$youPass', '$regTime')";
          $result = $connect -> query($sql);
          echo "<script>alert('회원가입을 축하합니다. 로그인을 해주세요!'); location.href = 'login.php'</script>";
      }

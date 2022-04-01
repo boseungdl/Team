@@ -14,12 +14,10 @@
     <link rel="stylesheet" href="../css/reset.css">
     <link href="https://webfontworld.github.io/BMJua/BMJua.css" rel="stylesheet">
     <?php
-        include "../../include/style.php";
+        include "../include/style.php";
     ?>
     <style>
-        body {
-            background: #FAFAFB;
-        }
+      
         #contents {
             width: 1200px;
             margin: 0 auto;
@@ -54,7 +52,7 @@
             margin-right: 10px;
             padding-left: 10px;
             border: 0;
-            background: #F5F5F5;
+            background: #DEDEFB;
             border-radius: 10px;
         }
         .board__write div textarea {
@@ -62,7 +60,7 @@
             height: 30vh;
             resize: none;
             border: 0;
-            background: #F5F5F5;
+            background: #DEDEFB;
             padding: 10px;
             border-radius: 10px;
         }
@@ -87,7 +85,7 @@
 <body>
     <!-- header -->
     <?php
-        include "../../include/header.php";
+        include "../include/header.php";
     ?>
     <!-- contents -->
     <main id="contents">
@@ -105,14 +103,14 @@
                                     <input class="iBox" type="text" name="boardTitle" id="boardTitle" placeholder="제목을 입력해주세요!" required>
                                 </div>
                                 <div>
-                                    <label for="boardMEET">MEET 주소</label>
-                                    <input class="iBox" type="text" name="boardMEET" id="boardMEET" placeholder="주소를 입력해주세요!" required>
+                                    <label for="boardMeet">MEET 주소</label>
+                                    <input class="iBox" type="text" name="boardMeet" id="boardMeet" placeholder="주소를 입력해주세요!">
                                 </div>
                                 <div>
                                     <span>테마분류</span>
-                                    <label for="boardThemeQ"><input type="radio" name="boardTheme" id="boardThemeQ">QnA</label>
-                                    <label for="boardThemeN"><input type="radio" name="boardTheme" id="boardThemeN">놀이터</label>
-                                    <label for="boardThemeT"><input type="radio" name="boardTheme" id="boardThemeT">토론장</label>
+                                    <label for="boardThemeQ"><input type="radio" name="boardThema" id="boardThemaQ" value="boardThemaQ">QnA</label>
+                                    <label for="boardThemeN"><input type="radio" name="boardThema" id="boardThemaN" value="boardThemaN">놀이터</label>
+                                    <label for="boardThemeT"><input type="radio" name="boardThema" id="boardThemaT" value="boardThemaT">토론장</label>
                                 </div>
                                 <div>
                                     <label for="boardContents">내용</label>
@@ -128,9 +126,6 @@
             </div>
         </section>
     </main>
-    <!-- footer -->
-    <?php
-        include "../../include/footer.php";
-    ?>
+    
 </body>
 </html>

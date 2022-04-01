@@ -68,18 +68,18 @@ include "../connect/session.php";
     $startPage = $pageView*$page - $pageView;
     
     
-    $sql = "SELECT blogImgFile, blogCategory, blogTitle, blogContents, blogAuthor, blogRegTime FROM myBlog ORDER BY blogID DESC LIMIT {$startPage}, {$pageView}";
+    $sql = "SELECT blogID, blogImgFile, blogCategory, blogTitle, blogContents, blogAuthor, blogRegTime FROM myBlog ORDER BY blogID DESC LIMIT {$startPage}, {$pageView}";
     $result = $connect -> query($sql);
   
             foreach($result as $blog){  ?>
           
                  <article class="blog mb20">
                     <figure class="blog__header">
-                        <img style="height: 250px;" src="../assets/img/blog/<?=$blog['blogImgFile']?>" alt="블로그이미지">
+                        <a href="blogView.php?blogID=<?=$blog['blogID']?>" style="background-image:url(../assets/img/blog/<?=$blog['blogImgFile']?>)"></a>
                     </figure>
                     <div class="blog__body">
                         <div class="blog__cate"><?=$blog['blogCategory']?></div>
-                        <div class="blog__title"><?=$blog['blogTitle']?></div>
+                        <div class="blog__title"><a href="blogView.php?blogID=<?=$blog['blogID']?>"><?=$blog['blogTitle']?></a></div>
                         <div class="blog__desc"><?=$blog['blogContents']?></div>
                         <div class="blog__info">
                             <span class="author"><a href="#"><?=$_SESSION['youname']?></a></span>

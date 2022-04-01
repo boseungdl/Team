@@ -8,18 +8,18 @@
     <link href="https://webfontworld.github.io/BMJua/BMJua.css" rel="stylesheet">
     <!-- style -->
     <?php
-        include "../../include/style.php";
+        include "../include/style.php";
     ?>
 </head>
 <body>
     <!-- header -->
     <?php
-        include "../../include/header.php";
+        include "../include/header.php";
     ?>
     <!-- contents -->
     <main id="contents">
         <h2 class="ir_so">컨텐츠 영역</h2>
-        <section class="login-type gray">
+        <section class="login-type">
             <div class="member-form">
                 <div class="logo"><img src="../assets/img/Logo.png" alt="로고"></div>
                 <h3>비밀번호 찾기</h3>
@@ -50,9 +50,6 @@
             </div>
         </section>
     </main>
-    <!-- footer -->
-    <?php
-        include "../../include/footer.php";
-    ?>
+   
 </body>
 </html>
